@@ -80,7 +80,12 @@ export function renderPaymentSummary() {
     saveOrder();
     cart.length = 0;
     saveToStorage()
-    alert('Order placed successfully!');
+
+    document.querySelector('.order-placed').style.display= 'block'
+
+    setTimeout(()=>{
     window.location.href = 'orders.html';
+
+    },2000)
   });
 }
