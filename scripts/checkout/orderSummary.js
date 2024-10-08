@@ -4,7 +4,6 @@ import {
       updateQuantity,updateDeliveryOption,saveToStorage
   } from '../../data/cart.js';
   import {products,getProducts} from '../../data/products.js';
-  // import { updatecartQuantity } from './amazon.js'
   import {formatCurrency }from '../Utils/money.js'
   
   import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
@@ -14,6 +13,8 @@ import {
   
   
   export function renderOrderSummary(){
+
+    
       let cartSummaryHTML = '';
       cart.forEach((cartItem) => {
         const productId = cartItem.productId;
@@ -172,11 +173,19 @@ import {
               `.js-cart-item-container-${productId}`
               );
               container.classList.remove('is-editing-quantity');
-  
-              
+
+
               const quantityInput = document.querySelector(
                 `.js-quantity-input-${productId}`
               );
+
+                  // Allow only numbers in the input field AND Ensure the quantity is at least 1
+              quantityInput.value = quantityInput.value.replace(/[^0-9]/g, '');
+              if (quantityInput.value === '' || parseInt(quantityInput.value, 10) < 1) {
+                quantityInput.value = 1;
+              }
+          
+        
               const newQuantity = Number(quantityInput.value);
               updateQuantity(productId, newQuantity);
   
